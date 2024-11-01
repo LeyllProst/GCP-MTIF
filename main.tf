@@ -1,4 +1,4 @@
-# VPC code
+# VPC
 provider "google" {
   project = var.project_id
   region  = var.region
@@ -14,7 +14,7 @@ locals {
   zones = data.google_compute_zones.this.names
 }
 
-# NETWORK code
+# NETWORK
 resource "google_compute_network" "this" {
   name                            = var.main_network_name
   delete_default_routes_on_create = false
