@@ -44,3 +44,19 @@ resource "google_compute_router_nat" "this" {
     source_ip_ranges_to_nat = ["ALL_IP_RANGES"]
   }
 }
+
+# FIREWALL RULES
+# IAP
+resource "google_compute_firewall" "allow-ssh-from-iap" {
+  name = "allow-ssh-from-iap"
+  network = google_compute_network.this.id
+
+  source_ranges = [
+    "35.235.240.0/20", 
+  ]
+
+  allow {
+    protocol    = "tcp"
+    ports       = ["22",]
+  }
+}
