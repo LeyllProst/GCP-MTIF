@@ -22,4 +22,5 @@ module "saltmaster" {
   labels = {
     "purpose" = "salt-master"
   }
+  startup_script = "dnf update -y && dnf install -y mc vim"
 }
