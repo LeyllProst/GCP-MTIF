@@ -38,6 +38,12 @@ variable "sub_network" {
   description = "sub network where instance belong to"
 }
 
+variable "network_ip" {
+  type = string
+  description = "instance IP on subnetwork"
+  default = ""
+}
+
 variable "bootdisk_autodelete" {
   type = bool
   description = "boot disk auto delete"
