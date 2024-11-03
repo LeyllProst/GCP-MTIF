@@ -16,8 +16,10 @@ module "saltmaster" {
   instance_type       = "e2-medium"
   update_stopping     = true
   deletion_protection = false
+
   network             = data.terraform_remote_state.vcp.outputs.main_network_name
   sub_network         = data.terraform_remote_state.vcp.outputs.subnetworks_name[1]
+  network_ip          = "10.10.20.5"
   bootdisk_image_size = 20
   image               = "projects/rocky-linux-cloud/global/images/rocky-linux-9-optimized-gcp-v20241009"
 
