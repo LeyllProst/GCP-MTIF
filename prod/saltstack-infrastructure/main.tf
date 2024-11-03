@@ -28,7 +28,7 @@ module "saltmaster" {
   }
 
   startup_script = <<EOF
-dnf update -y && dnf install -y mc vim net-tools bind-utils
+dnf update -y && dnf install -y mc vim net-tools bind-utils git 
 curl -fsSL https://github.com/saltstack/salt-install-guide/releases/latest/download/salt.repo | sudo tee /etc/yum.repos.d/salt.repo
 dnf install -y salt-master salt-minion salt-ssh salt-syndic salt-cloud salt-api
 systemctl enable salt-master && sudo systemctl start salt-master
