@@ -1,40 +1,40 @@
 
 variable "instance_name" {
-  type = string
+  type        = string
   description = "instance name"
 }
 
 variable "zone" {
-  type = string
+  type        = string
   description = "zone of the instance"
-  default = "us-central1-f"
+  default     = "us-central1-f"
 }
 
 variable "instance_type" {
-  type = string
+  type        = string
   description = "machine type of the instance"
-  default = "e2-medium"
+  default     = "e2-medium"
 }
 
 variable "update_stopping" {
-  type = bool
+  type        = bool
   description = "allow stopping for update"
-  default = true
+  default     = true
 }
 
 variable "deletion_protection" {
-  type = bool
+  type        = bool
   description = "allow delete protection"
-  default = false
+  default     = false
 }
 
 variable "network" {
-  type = string
+  type        = string
   description = "network where instance belong to"
 }
 
 variable "sub_network" {
-  type = string
+  type        = string
   description = "sub network where instance belong to"
 }
 
@@ -45,21 +45,21 @@ variable "network_ip" {
 }
 
 variable "bootdisk_autodelete" {
-  type = bool
+  type        = bool
   description = "boot disk auto delete"
-  default = true
+  default     = true
 }
 
 variable "bootdisk_image_size" {
-  type = number
+  type        = number
   description = "bootdisk image size"
-  default = 10
+  default     = 10
 }
 
 variable "image" {
-  type = string
+  type        = string
   description = "Operation System"
-  default = "projects/debian-cloud/global/images/debian-12-bookworm-v20241009"
+  default     = "projects/debian-cloud/global/images/debian-12-bookworm-v20241009"
 }
 
 variable "labels" {
@@ -70,8 +70,8 @@ variable "labels" {
 }
 
 variable "startup_script" {
-  type = string
+  type        = string
   description = "commands for startup"
-  default = "echo 'startup'"
+  default     = "echo 'startup'"
 
 }

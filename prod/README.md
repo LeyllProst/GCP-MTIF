@@ -1,6 +1,5 @@
 # PROD INFRASTRUCTURE
 
-## SALT MASTER node
-```hcl
-module "saltmaster"
-```
+## SALTSTACK infrastructure
+
+everything encapsulated here for testing the saltstack automation
