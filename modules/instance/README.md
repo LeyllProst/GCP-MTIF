@@ -12,6 +12,7 @@ to create virtual machine - google_compute_instance
 - deletion_protection
 - network
 - sub_network
+- network_ip
 - bootdisk_autodelete
 - bootdisk_image_size
 - image
