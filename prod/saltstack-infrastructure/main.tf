@@ -38,3 +38,29 @@ systemctl enable salt-api && sudo systemctl start salt-api
 EOF
 }
 
+# salt minions
+module "node-1" {
+  source              = "../../modules/instance"
+  instance_name       = "node1"
+  zone                = "us-central1-a"
+  instance_type       = "e2-small"
+  update_stopping     = true
+  deletion_protection = false
+
+  network             = data.terraform_remote_state.vcp.outputs.main_network_name
+  sub_network         = data.terraform_remote_state.vcp.outputs.subnetworks_name[1]
+  bootdisk_image_size = 10
+  image               = "projects/rocky-linux-cloud/global/images/rocky-linux-9-optimized-gcp-v20241009"
+
+  labels = {
+    "purpose" = "salt-minion"
+  }
+
+  startup_script = <<EOF
+dnf update -y && dnf install -y mc vim net-tools bind-utils git 
+curl -fsSL https://github.com/saltstack/salt-install-guide/releases/latest/download/salt.repo | sudo tee /etc/yum.repos.d/salt.repo
+dnf install -y salt-minion
+systemctl enable salt-minion && sudo systemctl start salt-minion
+EOF
+}
+
