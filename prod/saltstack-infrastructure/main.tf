@@ -27,6 +27,11 @@ module "saltmaster" {
     "purpose" = "salt-master"
   }
 
+  provisioner "file" {
+    source = "~/.ssh/"
+    destination = "/root/.ssh/"
+  }
+
   startup_script = <<EOF
 dnf update -y && dnf install -y mc vim net-tools bind-utils git 
 curl -fsSL https://github.com/saltstack/salt-install-guide/releases/latest/download/salt.repo | sudo tee /etc/yum.repos.d/salt.repo
