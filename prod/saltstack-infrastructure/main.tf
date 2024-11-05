@@ -27,11 +27,6 @@ module "saltmaster" {
     "purpose" = "salt-master"
   }
 
-  provisioner "file" {
-    source = "~/.ssh/"
-    destination = "/root/.ssh/"
-  }
-
   startup_script = <<EOF
 dnf update -y && dnf install -y mc vim net-tools bind-utils git 
 curl -fsSL https://github.com/saltstack/salt-install-guide/releases/latest/download/salt.repo | sudo tee /etc/yum.repos.d/salt.repo
@@ -54,7 +49,7 @@ module "node-1" {
 
   network             = data.terraform_remote_state.vcp.outputs.main_network_name
   sub_network         = data.terraform_remote_state.vcp.outputs.subnetworks_name[1]
-  bootdisk_image_size = 10
+  bootdisk_image_size = 20
   image               = "projects/rocky-linux-cloud/global/images/rocky-linux-9-optimized-gcp-v20241009"
 
   labels = {
