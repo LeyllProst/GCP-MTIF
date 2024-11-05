@@ -60,3 +60,18 @@ resource "google_compute_firewall" "allow-ssh-from-iap" {
     ports    = ["22", ]
   }
 }
+
+# SALTSTACK
+resource "google_compute_firewall" "allow-saltstack" {
+  name    = "allow-saltstack"
+  network = google_compute_network.this.id
+
+  source_ranges = [
+    "0.0.0.0/0",
+  ]
+
+  allow {
+    protocol = "tcp"
+    ports    = ["4505", "4506" ]
+  }
+}
