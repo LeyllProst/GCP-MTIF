@@ -31,17 +31,21 @@ module "saltmaster" {
 dnf update -y && dnf install -y mc vim net-tools bind-utils git 
 curl -fsSL https://github.com/saltstack/salt-install-guide/releases/latest/download/salt.repo | sudo tee /etc/yum.repos.d/salt.repo
 dnf install -y salt-master salt-minion salt-ssh salt-syndic salt-cloud salt-api
-systemctl enable salt-master && sudo systemctl start salt-master
-systemctl enable salt-minion && sudo systemctl start salt-minion
-systemctl enable salt-syndic && sudo systemctl start salt-syndic
-systemctl enable salt-api && sudo systemctl start salt-api
+systemctl enable salt-master && systemctl start salt-master
+systemctl enable salt-minion && systemctl start salt-minion
+systemctl enable salt-syndic && systemctl start salt-syndic
+systemctl enable salt-api && systemctl start salt-api
+echo "master: saltmaster" > /etc/salt/minion.d/minion.conf
+systemctl restart salt-minion
+echo "interface: 10.10.20.5" > /etc/salt/master.d/master.conf
+systemctl restart salt-master
 EOF
 }
 
 # salt minions
 module "salt-node-1" {
   source              = "../../modules/instance"
-  instance_name       = "node1"
+  instance_name       = "salt-node-1"
   zone                = "us-central1-a"
   instance_type       = "e2-small"
   update_stopping     = true
@@ -60,7 +64,9 @@ module "salt-node-1" {
 dnf update -y && dnf install -y mc vim net-tools bind-utils git 
 curl -fsSL https://github.com/saltstack/salt-install-guide/releases/latest/download/salt.repo | sudo tee /etc/yum.repos.d/salt.repo
 dnf install -y salt-minion
-systemctl enable salt-minion && sudo systemctl start salt-minion
+systemctl enable salt-minion && systemctl start salt-minion
+echo "master: saltmaster" > /etc/salt/minion.d/minion.conf
+systemctl restart salt-minion
 EOF
 }
 
