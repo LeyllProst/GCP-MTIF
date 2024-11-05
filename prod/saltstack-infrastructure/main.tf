@@ -39,7 +39,7 @@ EOF
 }
 
 # salt minions
-module "node-1" {
+module "salt-node-1" {
   source              = "../../modules/instance"
   instance_name       = "node1"
   zone                = "us-central1-a"
