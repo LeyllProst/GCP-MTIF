@@ -60,12 +60,6 @@ file_roots:
     - /opt/infrastructure/maintenance
 EOG
 
-cat << 'EOH' >> /etc/salt/minion.d/role_base.conf
-grains:
-  role:
-    - base
-EOH
-
 systemctl restart salt-master
 EOF
 }
@@ -94,15 +88,14 @@ curl -fsSL https://github.com/saltstack/salt-install-guide/releases/latest/downl
 dnf install -y salt-minion
 systemctl enable salt-minion
 echo "master: 10.10.20.5" > /etc/salt/minion.d/minion.conf
-cat << 'EOG' >> /etc/salt/minion.d/role_base.conf
-grains:
-  role:
-    - base
-EOG
-
 systemctl restart salt-minion
 EOF
 }
+
+# cat /etc/salt/minion.d/role_base.conf
+# grains:
+#  role:
+#    - base
 
 # [root@saltmaster ~]# cat /etc/salt/minion.d/environment.conf 
 # saltenv: maintenance
