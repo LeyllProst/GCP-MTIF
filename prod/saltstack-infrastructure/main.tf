@@ -29,7 +29,7 @@ module "saltmaster" {
 
   startup_script = <<EOF
 dnf update -y
-curl -fsSL https://github.com/saltstack/salt-install-guide/releases/latest/download/salt.repo | sudo tee /etc/yum.repos.d/salt.repo
+curl -fsSL https://github.com/saltstack/salt-install-guide/releases/latest/download/salt.repo | tee /etc/yum.repos.d/salt.repo
 dnf install -y salt-master salt-minion salt-ssh salt-syndic salt-cloud salt-api
 systemctl enable salt-master
 systemctl enable salt-minion
@@ -53,11 +53,20 @@ env_order:
   - production
   - maintenance
 
+## SLS ROOT definitions
 file_roots:
   production:
     - /opt/infrastructure/production
   maintenance:
     - /opt/infrastructure/maintenance
+
+## PILLAR definitions
+pillar_roots:
+  production:
+    - /opt/pillar/production
+  maintenance:
+    - /opt/pillar/maintenance
+
 EOG
 
 systemctl restart salt-master
@@ -84,29 +93,10 @@ module "salt-node-1" {
 
   startup_script = <<EOF
 dnf update -y
-curl -fsSL https://github.com/saltstack/salt-install-guide/releases/latest/download/salt.repo | sudo tee /etc/yum.repos.d/salt.repo
+curl -fsSL https://github.com/saltstack/salt-install-guide/releases/latest/download/salt.repo | tee /etc/yum.repos.d/salt.repo
 dnf install -y salt-minion
 systemctl enable salt-minion
 echo "master: 10.10.20.5" > /etc/salt/minion.d/minion.conf
 systemctl restart salt-minion
 EOF
 }
-
-# cat /etc/salt/minion.d/role_base.conf
-# grains:
-#  role:
-#    - base
-
-# [root@saltmaster ~]# cat /etc/salt/minion.d/environment.conf 
-# saltenv: maintenance
-
-# [root@saltmaster ~]# cat /opt/infrastructure/production/top.sls 
-# production:
-#   '*':
-#     - core
-
-# [root@saltmaster ~]# cat /opt/infrastructure/maintenance/top.sls 
-# maintenance:
-#   '*':
-#     - core
-
