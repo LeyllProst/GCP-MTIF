@@ -29,47 +29,19 @@ module "saltmaster" {
 
   startup_script = <<EOF
 dnf update -y
+
 curl -fsSL https://github.com/saltstack/salt-install-guide/releases/latest/download/salt.repo | tee /etc/yum.repos.d/salt.repo
+
 dnf install -y salt-master salt-minion salt-ssh salt-syndic salt-cloud salt-api
-systemctl enable salt-master
-systemctl enable salt-minion
+
 systemctl enable salt-syndic && systemctl start salt-syndic
 systemctl enable salt-api && systemctl start salt-api
-echo "master: 10.10.20.5" > /etc/salt/minion.d/minion.conf
-systemctl restart salt-minion
 
-cat << 'EOG' >> /etc/salt/master.d/master.conf
-## MASTER CONFIG parameters
-interface: 10.10.20.5
-ipv6: False
-state_verbose: False
+echo 'master: 10.10.20.5' > /etc/salt/minion.d/minion.conf
 
-## ENVIRONMENT definitions
-default_top: production
-state_top_saltenv: production
-top_file_merging_strategy: same
+systemctl enable salt-master && systemctl start salt-master
+systemctl enable salt-minion && systemctl start salt-minion
 
-env_order:
-  - production
-  - maintenance
-
-## SLS ROOT definitions
-file_roots:
-  production:
-    - /opt/infrastructure/production
-  maintenance:
-    - /opt/infrastructure/maintenance
-
-## PILLAR definitions
-pillar_roots:
-  production:
-    - /opt/pillar/production
-  maintenance:
-    - /opt/pillar/maintenance
-
-EOG
-
-systemctl restart salt-master
 EOF
 }
 
