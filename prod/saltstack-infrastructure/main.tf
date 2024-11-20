@@ -46,29 +46,29 @@ EOF
 }
 
 # salt minions
-# module "salt-node-1" {
-#   source              = "../../modules/instance"
-#   instance_name       = "salt-node-1"
-#   zone                = "us-central1-a"
-#   instance_type       = "e2-small"
-#   update_stopping     = true
-#   deletion_protection = false
+module "repository" {
+  source              = "../../modules/instance"
+  instance_name       = "repository"
+  zone                = "us-central1-a"
+  instance_type       = "e2-medium"
+  update_stopping     = true
+  deletion_protection = false
 
-#   network             = data.terraform_remote_state.vcp.outputs.main_network_name
-#   sub_network         = data.terraform_remote_state.vcp.outputs.subnetworks_name[1]
-#   bootdisk_image_size = 20
-#   image               = "projects/rocky-linux-cloud/global/images/rocky-linux-9-optimized-gcp-v20241009"
+  network             = data.terraform_remote_state.vcp.outputs.main_network_name
+  sub_network         = data.terraform_remote_state.vcp.outputs.subnetworks_name[1]
+  bootdisk_image_size = 20
+  image               = "projects/rocky-linux-cloud/global/images/rocky-linux-9-optimized-gcp-v20241009"
 
-#   labels = {
-#     "purpose" = "salt-minion"
-#   }
+  labels = {
+    "purpose" = "salt-minion"
+  }
 
-#   startup_script = <<EOF
-# dnf update -y
-# curl -fsSL https://github.com/saltstack/salt-install-guide/releases/latest/download/salt.repo | tee /etc/yum.repos.d/salt.repo
-# dnf install -y salt-minion
-# systemctl enable salt-minion
-# echo "master: 10.10.20.5" > /etc/salt/minion.d/minion.conf
-# systemctl restart salt-minion
-# EOF
-# }
+  startup_script = <<EOF
+dnf update -y
+curl -fsSL https://github.com/saltstack/salt-install-guide/releases/latest/download/salt.repo | tee /etc/yum.repos.d/salt.repo
+dnf install -y salt-minion
+systemctl enable salt-minion
+echo "master: 10.10.20.5" > /etc/salt/minion.d/minion.conf
+systemctl restart salt-minion
+EOF
+}
