@@ -1,4 +1,4 @@
-# read remote state from gcs
+# REMOTE STATE reading from gcs
 data "terraform_remote_state" "vcp" {
   backend = "gcs"
 
@@ -8,67 +8,45 @@ data "terraform_remote_state" "vcp" {
   }
 }
 
-# salt master instance
+
+
+
+# SALTMASTER instance
 module "saltmaster" {
-  source              = "../../modules/instance"
-  instance_name       = "saltmaster"
-  zone                = "us-central1-a"
-  instance_type       = "e2-medium"
-  update_stopping     = true
-  deletion_protection = false
+  source = "git@github.com:LeyllProst/mtif-modules-instances.git?ref=v1.1.0"
 
   network             = data.terraform_remote_state.vcp.outputs.main_network_name
   sub_network         = data.terraform_remote_state.vcp.outputs.subnetworks_name[1]
-  network_ip          = "10.10.20.5"
-  bootdisk_image_size = 20
-  image               = "projects/rocky-linux-cloud/global/images/rocky-linux-9-optimized-gcp-v20241009"
+  instance_name       = var.saltmaster-instance_name
+  network_ip          = var.saltmaster-network_ip
+  instance_type       = var.saltmaster-instance_type
+  update_stopping     = var.update_stopping
+  deletion_protection = var.deletion_protection
+  labels              = var.saltmaster-labels
 
-  labels = {
-    "purpose" = "salt-master"
-  }
+  bootdisk_image_size = var.saltmaster-bootdisk_image_size
+  image               = var.saltmaster-image
 
-  startup_script = <<EOF
-dnf update -y
-
-curl -fsSL https://github.com/saltstack/salt-install-guide/releases/latest/download/salt.repo | tee /etc/yum.repos.d/salt.repo
-
-dnf install -y salt-master salt-minion salt-ssh salt-syndic salt-cloud salt-api
-
-systemctl enable salt-syndic && systemctl start salt-syndic
-systemctl enable salt-api && systemctl start salt-api
-
-echo 'master: 10.10.20.5' > /etc/salt/minion.d/minion.conf
-
-systemctl enable salt-master && systemctl start salt-master
-systemctl enable salt-minion && systemctl start salt-minion
-
-EOF
+  startup_script = var.saltmaster-startup_script
 }
 
-# salt minions
+
+
+
+# REPOSITORY salt minion instance
 module "repository" {
-  source              = "../../modules/instance"
-  instance_name       = "repository"
-  zone                = "us-central1-a"
-  instance_type       = "e2-medium"
-  update_stopping     = true
-  deletion_protection = false
+  source = "git@github.com:LeyllProst/mtif-modules-instances.git?ref=v1.1.0"
 
   network             = data.terraform_remote_state.vcp.outputs.main_network_name
   sub_network         = data.terraform_remote_state.vcp.outputs.subnetworks_name[1]
-  bootdisk_image_size = 20
-  image               = "projects/rocky-linux-cloud/global/images/rocky-linux-9-optimized-gcp-v20241009"
+  instance_name       = var.repository-instance_name
+  instance_type       = var.repository-instance_type
+  update_stopping     = var.update_stopping
+  deletion_protection = var.deletion_protection
+  labels              = var.repository-labels
 
-  labels = {
-    "purpose" = "salt-minion"
-  }
+  bootdisk_image_size = var.repository-bootdisk_image_size
+  image               = var.repository-image
 
-  startup_script = <<EOF
-dnf update -y
-curl -fsSL https://github.com/saltstack/salt-install-guide/releases/latest/download/salt.repo | tee /etc/yum.repos.d/salt.repo
-dnf install -y salt-minion
-systemctl enable salt-minion
-echo "master: 10.10.20.5" > /etc/salt/minion.d/minion.conf
-systemctl restart salt-minion
-EOF
+  startup_script = var.repository-startup_script
 }
