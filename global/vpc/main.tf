@@ -1,8 +1,3 @@
-provider "google" {
-  project = var.project_id
-  region  = var.region
-}
-
 resource "google_storage_bucket" "terraform_state" {
   name                        = "terraform-state-us-central1-mtif-439912"
   location                    = "us-central1"
@@ -23,8 +18,8 @@ terraform {
 }
 
 module "vpc" {
-  source = "../../modules/vpc"
+  source = "git@github.com:LeyllProst/mtif-modules-vpc.git?ref=v1.2.0"
 
-  region     = var.region
   project_id = var.project_id
+  region     = var.region
 }
