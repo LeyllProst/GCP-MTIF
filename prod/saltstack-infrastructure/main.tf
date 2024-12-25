@@ -55,8 +55,8 @@ module "repository" {
 module "saltstack_firewall" {
   source = "git@github.com:LeyllProst/gcp-mtif-firewall.git?ref=v1.0.0"
 
-  firewall_name                = "saltstack firewall rules"
-  network             = data.terraform_remote_state.vcp.outputs.main_network_name
+  firewall_name = "saltstack-firewall-rules"
+  network       = data.terraform_remote_state.vcp.outputs.main_network_name
 
   allow_rules = [
     {
