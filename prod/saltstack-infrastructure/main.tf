@@ -53,7 +53,7 @@ module "repository" {
 
 # FIREWALL rules
 module "saltstack_firewall" {
-  source = "git@github.com:LeyllProst/gcp-mtif-firewall.git?ref=v1.0.1"
+  source = "git@github.com:LeyllProst/gcp-mtif-firewall.git?ref=v1.0.2"
 
   firewall_name = "saltstack-firewall-rules"
   network       = data.terraform_remote_state.vcp.outputs.main_network_name
@@ -63,7 +63,7 @@ module "saltstack_firewall" {
   allow_rules = [
     {
       protocol = "tcp"
-      ports    = ["4505", "4506", "443"]
+      ports    = ["4505", "4506"]
     }
   ]
 } 
