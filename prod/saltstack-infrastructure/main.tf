@@ -13,7 +13,7 @@ data "terraform_remote_state" "vcp" {
 
 # SALTMASTER instance
 module "saltmaster" {
-  source = "git@github.com:LeyllProst/mtif-modules-instances.git?ref=v1.1.0"
+  source = "git@github.com:LeyllProst/gcp-mtif-instances.git?ref=v1.1.0"
 
   network             = data.terraform_remote_state.vcp.outputs.main_network_name
   sub_network         = data.terraform_remote_state.vcp.outputs.subnetworks_name[1]
@@ -35,7 +35,7 @@ module "saltmaster" {
 
 # REPOSITORY salt minion instance
 module "repository" {
-  source = "git@github.com:LeyllProst/mtif-modules-instances.git?ref=v1.1.0"
+  source = "git@github.com:LeyllProst/gcp-mtif-instances.git?ref=v1.1.0"
 
   network             = data.terraform_remote_state.vcp.outputs.main_network_name
   sub_network         = data.terraform_remote_state.vcp.outputs.subnetworks_name[1]
