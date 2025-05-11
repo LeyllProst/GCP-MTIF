@@ -18,7 +18,7 @@ terraform {
 }
 
 module "vpc" {
-  source = "git@github.com:LeyllProst/gcp-mtif-vpc.git?ref=v1.4.0"
+  source = "git@github.com:LeyllProst/gcp-mtif-vpc.git?ref=v1.5.0"
 
   project_id = var.project_id
   region     = var.region
