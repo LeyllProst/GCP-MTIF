@@ -13,3 +13,7 @@ output "main_network_name" {
 output "subnetworks_name" {
   value = module.vpc.subnetworks_name
 }
+
+output "network CIDR range" {
+  value = module.vpc.ip_cidr_range
+}
