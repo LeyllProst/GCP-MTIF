@@ -1,10 +1,10 @@
 resource "google_storage_bucket" "terraform_state" {
   name                        = "terraform-state-us-central1-mtif-439912"
-  location                    = "us-central1"
+  project                     = var.project
+  location                    = var.region
   uniform_bucket_level_access = true
   force_destroy               = true
   storage_class               = "STANDARD"
-
   versioning {
     enabled = true
   }
@@ -18,8 +18,8 @@ terraform {
 }
 
 module "vpc" {
-  source = "git@github.com:LeyllProst/gcp-mtif-vpc.git?ref=v1.6.0"
+  source = "git@github.com:LeyllProst/gcp-mtif-vpc.git?ref=b/1.6.1"
 
-  project_id = var.project_id
+  project_id = var.project
   region     = var.region
 }

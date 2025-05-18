@@ -1,9 +1,9 @@
-output "project_id" {
-  value = var.project_id
+output "project" {
+  value = google_storage_bucket.terraform_state.project
 }
 
-output "region" {
-  value = var.project_id
+output "location" {
+  value = google_storage_bucket.terraform_state.location
 }
 
 output "main_network_name" {

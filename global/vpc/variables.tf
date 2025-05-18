@@ -1,6 +1,6 @@
-variable "project_id" {
+variable "project" {
   type        = string
-  description = "Project ID"
+  description = "project ID"
   default     = "mtif-439912"
 }
 
