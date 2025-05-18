@@ -18,7 +18,7 @@ terraform {
 }
 
 module "vpc" {
-  source = "git@github.com:LeyllProst/gcp-mtif-vpc.git?ref=b/1.6.1"
+  source = "git@github.com:LeyllProst/gcp-mtif-vpc.git?ref=v1.6.1"
 
   network_name  = var.network_name
   ip_cidr_range = var.ip_cidr_range
