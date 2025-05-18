@@ -17,10 +17,11 @@ terraform {
   }
 }
 
-module "vpc" {
-  source = "git@github.com:LeyllProst/gcp-mtif-vpc.git?ref=b/1.6.1"
+# module "vpc" {
+#   source = "git@github.com:LeyllProst/gcp-mtif-vpc.git?ref=b/1.6.1"
 
-  project_id = var.project
-  region     = var.region
-  ip_cidr_range = ["10.10.10.0/24", "10.10.20.0/24"]
-}
+
+#   # project_id    = var.project
+#   # region        = var.region
+#   # ip_cidr_range = ["10.10.10.0/24", "10.10.20.0/24"]
+# }
