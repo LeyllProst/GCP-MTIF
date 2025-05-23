@@ -1,16 +1,16 @@
-variable "project_id" {
+variable "project" {
   description = "project ID"
   type        = string
   default     = "mtif-439912"
 }
 
-variable "region" {
+variable "location" {
   description = "region of this infrastructure"
   type        = string
   default     = "us-central1"
 }
 
-variable "network_name" {
+variable "vpc_network_name" {
   description = "VPC network name"
   type        = string
   default     = "backbonex"
