@@ -18,6 +18,11 @@ variable "saltmaster-instance_name" {
   default = "saltmaster"
 }
 
+variable "saltmaster-instance_zone" {
+  type    = string
+  default = "us-central1-f"
+}
+
 variable "saltmaster-network_ip" {
   type    = string
   default = "10.10.20.5"
