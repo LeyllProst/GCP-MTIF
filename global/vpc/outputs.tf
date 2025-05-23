@@ -6,11 +6,19 @@ output "location" {
   value = google_storage_bucket.terraform_state.location
 }
 
-output "network_name" {
-  value = module.vpc.network_name
+output "vpc_network_name" {
+  value = module.vpc.vpc_network_name
 }
-output "subnetworks_name" {
-  value = module.vpc.subnetworks
+
+output "vpc_network_self_link" {
+  value = module.vpc.vpc_network_self_link
+}
+output "vpc_subnetwork_name" {
+  value = module.vpc.vpc_subnetwork_name
+}
+
+output "vpc_subnetwork_self_link" {
+  value = module.vpc.vpc_subnetwork_self_link
 }
 
 output "ip_cidr_range" {
