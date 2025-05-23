@@ -13,11 +13,13 @@ data "terraform_remote_state" "vcp" {
 
 # SALTMASTER instance
 module "saltmaster" {
-  source = "git@github.com:LeyllProst/gcp-mtif-instances.git?ref=v1.1.0"
+  source = "git@github.com:LeyllProst/gcp-mtif-instances.git?ref=v2.0.2"
 
-  network             = data.terraform_remote_state.vcp.outputs.main_network_name
-  sub_network         = data.terraform_remote_state.vcp.outputs.subnetworks_name[1]
+  project_id          = data.terraform_remote_state.vcp.outputs.project
+  network             = data.terraform_remote_state.vcp.outputs.vpc_network_self_link
+  subnetwork          = data.terraform_remote_state.vcp.outputs.vpc_subnetwork_self_link[1]
   instance_name       = var.saltmaster-instance_name
+  zone                = var.saltmaster-instance_zone
   network_ip          = var.saltmaster-network_ip
   instance_type       = var.saltmaster-instance_type
   update_stopping     = var.update_stopping
@@ -35,11 +37,13 @@ module "saltmaster" {
 
 # REPOSITORY salt minion instance
 module "repository" {
-  source = "git@github.com:LeyllProst/gcp-mtif-instances.git?ref=v1.1.0"
+  source = "git@github.com:LeyllProst/gcp-mtif-instances.git?ref=v2.0.2"
 
-  network             = data.terraform_remote_state.vcp.outputs.main_network_name
-  sub_network         = data.terraform_remote_state.vcp.outputs.subnetworks_name[1]
+  project_id          = data.terraform_remote_state.vcp.outputs.project
+  network             = data.terraform_remote_state.vcp.outputs.vpc_network_self_link
+  subnetwork          = data.terraform_remote_state.vcp.outputs.vpc_subnetwork_self_link[1]
   instance_name       = var.repository-instance_name
+  zone                = var.repository-instance_zone
   instance_type       = var.repository-instance_type
   update_stopping     = var.update_stopping
   deletion_protection = var.deletion_protection
@@ -53,17 +57,18 @@ module "repository" {
 
 # FIREWALL rules
 module "saltstack_firewall" {
-  source = "git@github.com:LeyllProst/gcp-mtif-firewall.git?ref=v1.0.2"
+  source = "git@github.com:LeyllProst/gcp-mtif-firewall.git?ref=v2.1.0"
 
+  project       = data.terraform_remote_state.vcp.outputs.project
   firewall_name = "saltstack-firewall-rules"
-  network       = data.terraform_remote_state.vcp.outputs.main_network_name
+  network       = data.terraform_remote_state.vcp.outputs.vpc_network_self_link
 
   source_ranges = ["0.0.0.0/0"]
-  
+
   allow_rules = [
     {
       protocol = "tcp"
       ports    = ["4505", "4506"]
     }
   ]
-} 
+}

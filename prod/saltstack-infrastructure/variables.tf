@@ -18,6 +18,11 @@ variable "saltmaster-instance_name" {
   default = "saltmaster"
 }
 
+variable "saltmaster-instance_zone" {
+  type    = string
+  default = "us-central1-f"
+}
+
 variable "saltmaster-network_ip" {
   type    = string
   default = "10.10.20.5"
@@ -71,6 +76,11 @@ variable "saltmaster-startup_script" {
 variable "repository-instance_name" {
   type    = string
   default = "repository"
+}
+
+variable "repository-instance_zone" {
+  type    = string
+  default = "us-central1-f"
 }
 
 variable "repository-instance_type" {

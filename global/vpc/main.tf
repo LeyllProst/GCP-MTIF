@@ -1,7 +1,7 @@
 resource "google_storage_bucket" "terraform_state" {
   name                        = "terraform-state-us-central1-mtif-439912"
-  project                     = var.project_id
-  location                    = var.region
+  project                     = var.project
+  location                    = var.location
   uniform_bucket_level_access = true
   force_destroy               = true
   storage_class               = "STANDARD"
@@ -18,8 +18,8 @@ terraform {
 }
 
 module "vpc" {
-  source = "git@github.com:LeyllProst/gcp-mtif-vpc.git?ref=v1.6.1"
+  source = "git@github.com:LeyllProst/gcp-mtif-vpc.git?ref=v1.7.0"
 
-  network_name  = var.network_name
-  ip_cidr_range = var.ip_cidr_range
+  vpc_network_name = var.vpc_network_name
+  ip_cidr_range    = var.ip_cidr_range
 }
