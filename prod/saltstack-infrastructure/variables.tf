@@ -78,6 +78,11 @@ variable "repository-instance_name" {
   default = "repository"
 }
 
+variable "repository-instance_zone" {
+  type    = string
+  default = "us-central1-f"
+}
+
 variable "repository-instance_type" {
   type    = string
   default = "e2-medium"
