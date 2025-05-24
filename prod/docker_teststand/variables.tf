@@ -14,8 +14,9 @@ variable "docker-teststand-instance_name" {
   default = "docker-teststand"
 }
 
-variable "docker-teststand_zone" {
+variable "docker-teststand_instance_zone" {
   type    = string
+  default = "us-central1-f"
 }
 
 variable "docker-teststand-network_ip" {
@@ -28,7 +29,7 @@ variable "docker-teststand-instance_type" {
   default = "e2-standard-2"
 }
 
-variable "docker-teststand-labels" {
+variable "docker-teststand-instance_labels" {
   type = map(string)
   default = {
     "purpose" = "docker"
@@ -45,7 +46,7 @@ variable "docker-teststand-image" {
   default = "projects/ubuntu-os-cloud/global/images/ubuntu-2404-noble-amd64-v20250409"
 }
 
-variable "assign_ephemeral_external_ip" {
+variable "docker-teststand-assign_ephemeral_external_ip" {
   type    = bool
   default = true
 }
