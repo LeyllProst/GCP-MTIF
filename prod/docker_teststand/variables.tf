@@ -43,7 +43,7 @@ variable "docker-teststand-bootdisk_image_size" {
 
 variable "docker-teststand-image" {
   type    = string
-  default = "projects/ubuntu-os-cloud/global/images/ubuntu-2404-noble-amd64-v20250409"
+  default = "rojects/ubuntu-os-cloud/global/images/ubuntu-minimal-2504-plucky-amd64-v20250430"
 }
 
 variable "docker-teststand-assign_ephemeral_external_ip" {
@@ -59,6 +59,6 @@ variable "docker-teststand-startup_script" {
     set -e
     
     apt update && apt upgrade -y
-    apt install docker-compose -y
+    apt install docker-compose-v2 -y
   EOF
 }
