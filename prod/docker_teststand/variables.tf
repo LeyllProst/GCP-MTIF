@@ -26,7 +26,7 @@ variable "docker-teststand-network_ip" {
 
 variable "docker-teststand-instance_type" {
   type    = string
-  default = "e2-standard-2"
+  default = "e2-standard-4"
 }
 
 variable "docker-teststand-instance_labels" {
