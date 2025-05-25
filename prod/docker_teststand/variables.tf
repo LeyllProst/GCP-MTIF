@@ -43,7 +43,7 @@ variable "docker-teststand-bootdisk_image_size" {
 
 variable "docker-teststand-image" {
   type    = string
-  default = "rojects/ubuntu-os-cloud/global/images/ubuntu-minimal-2504-plucky-amd64-v20250430"
+  default = "projects/ubuntu-os-cloud/global/images/ubuntu-minimal-2504-plucky-amd64-v20250430"
 }
 
 variable "docker-teststand-assign_ephemeral_external_ip" {
