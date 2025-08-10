@@ -17,18 +17,18 @@ module "docker-teststand" {
   network    = data.terraform_remote_state.vcp.outputs.vpc_network_self_link
   subnetwork = data.terraform_remote_state.vcp.outputs.vpc_subnetwork_self_link[0]
 
-  instance_name                = var.docker-teststand-instance_name
-  zone                         = var.docker-teststand_instance_zone
-  network_ip                   = var.docker-teststand-network_ip
-  instance_type                = var.docker-teststand-instance_type
-  update_stopping              = var.docker-teststand-update_stopping
-  deletion_protection          = var.docker-teststand-deletion_protection
-  labels                       = var.docker-teststand-instance_labels
-  bootdisk_image_size          = var.docker-teststand-bootdisk_image_size
-  image                        = var.docker-teststand-image
-  startup_script               = var.docker-teststand-startup_script
-  assign_ephemeral_external_ip = var.docker-teststand-assign_ephemeral_external_ip
-  tags                         = [var.docker-teststand-instance_name]
+  instance_name                = var.docker_teststand_instance_name
+  zone                         = var.docker_teststand_instance_zone
+  network_ip                   = var.docker_teststand_network_ip
+  instance_type                = var.docker_teststand_instance_type
+  update_stopping              = var.docker_teststand_update_stopping
+  deletion_protection          = var.docker_teststand_deletion_protection
+  labels                       = var.docker_teststand_instance_labels
+  bootdisk_image_size          = var.docker_teststand_bootdisk_image_size
+  image                        = var.docker_teststand_image
+  startup_script               = var.docker_teststand_startup_script
+  assign_ephemeral_external_ip = var.docker_teststand_assign_ephemeral_external_ip
+  tags                         = [var.docker_teststand_instance_name]
 }
 
 
@@ -41,7 +41,7 @@ module "docker-teststand_firewall" {
   firewall_name = "docker-teststand-firewall-rules"
   network       = data.terraform_remote_state.vcp.outputs.vpc_network_self_link
   source_ranges = ["0.0.0.0/0"]
-  target_tags   = [var.docker-teststand-instance_name]
+  target_tags   = [var.docker_teststand_instance_name]
 
   allow_rules = [
     {
