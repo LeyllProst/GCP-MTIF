@@ -1,11 +1,3 @@
-output "project" {
-  value = google_storage_bucket.terraform_state.project
-}
-
-output "location" {
-  value = google_storage_bucket.terraform_state.location
-}
-
 output "vpc_network_name" {
   value = module.vpc.vpc_network_name
 }
