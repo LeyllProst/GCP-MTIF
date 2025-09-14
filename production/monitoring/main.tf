@@ -4,7 +4,7 @@ data "terraform_remote_state" "vpc" {
 
   config = {
     bucket = "terraform-state-us-central1-mtif-439912"
-    prefix = "terraform/state"
+    prefix = "terraform/remote-state"
   }
 }
 

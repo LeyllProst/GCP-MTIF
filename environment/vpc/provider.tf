@@ -1,4 +1,4 @@
-data "terraform_remote_state" "vpc" {
+data "terraform_remote_state" "trs" {
   backend = "gcs"
 
   config = {
@@ -19,6 +19,6 @@ terraform {
 }
 
 provider "google" {
-  project = data.terraform_remote_state.vpc.outputs.project_id
-  region  = data.terraform_remote_state.vpc.outputs.remote_state_location
+  project = data.terraform_remote_state.trs.outputs.project_id
+  region  = data.terraform_remote_state.trs.outputs.remote_state_location
 }
