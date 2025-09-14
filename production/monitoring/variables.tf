@@ -32,7 +32,7 @@ variable "monitoring_instance_type" {
 variable "monitoring_instance_labels" {
   type = map(string)
   default = {
-    "purpose" = "infrastructure and application monitoring"
+    "purpose" = "infrastructure_monitoring"
   }
 }
 

@@ -16,6 +16,15 @@ data "terraform_remote_state" "trs" {
   }
 }
 
+data "terraform_remote_state" "vpc" {
+  backend = "gcs"
+
+  config = {
+    bucket = "terraform_remote_state_us-central1_mtif-439912"
+    prefix = "terraform/vpc"
+  }
+}
+
 
 # MONITORING instance
 module "monitoring" {
@@ -41,20 +50,20 @@ module "monitoring" {
 
 
 # FIREWALL rules
-# module "monitoring_firewall" {
-#   source = "git@github.com:LeyllProst/gcp-mtif-firewall.git?ref=v2.1.0"
+module "monitoring_firewall" {
+  source = "git@github.com:LeyllProst/gcp-mtif-firewall.git?ref=v2.1.0"
 
-#   project = data.terraform_remote_state.vpc.outputs.project
+  project = data.terraform_remote_state.trs.outputs.project_id
 
-#   firewall_name = "monitoring-firewall-rules"
-#   network       = data.terraform_remote_state.vpc.outputs.vpc_network_self_link
-#   source_ranges = ["0.0.0.0/0"]
-#   target_tags   = [var.monitoring_instance_name]
+  firewall_name = "monitoring-firewall-rules"
+  network       = data.terraform_remote_state.vpc.outputs.vpc_network_self_link
+  source_ranges = ["0.0.0.0/0"]
+  target_tags   = [var.monitoring_instance_name]
 
-#   allow_rules = [
-#     {
-#       protocol = "tcp"
-#       ports    = ["8080"]
-#     }
-#   ]
-# }
+  allow_rules = [
+    {
+      protocol = "tcp"
+      ports    = ["8080"]
+    }
+  ]
+}
