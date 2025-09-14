@@ -2,8 +2,8 @@ data "terraform_remote_state" "vpc" {
   backend = "gcs"
 
   config = {
-    bucket = "terraform-state-us-central1-mtif-439912"
-    prefix = "terraform/state"
+    bucket = "terraform_remote_state_us-central1_mtif-439912"
+    prefix = "terraform/remote-state"
   }
 }
 
@@ -19,6 +19,6 @@ terraform {
 }
 
 provider "google" {
-  project = data.terraform_remote_state.vpc.outputs.project
-  region  = data.terraform_remote_state.vpc.outputs.location
+  project = data.terraform_remote_state.vpc.outputs.project_id
+  region  = data.terraform_remote_state.vpc.outputs.remote_state_location
 }
