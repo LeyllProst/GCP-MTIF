@@ -1,10 +1,27 @@
+# Remote State backend configuration
+terraform {
+  backend "gcs" {
+    bucket = "terraform_remote_state_us-central1_mtif-439912"
+    prefix = "terraform/docker-teststand"
+  }
+}
+
 # REMOTE STATE reading from gcs
-data "terraform_remote_state" "vcp" {
+data "terraform_remote_state" "trs" {
   backend = "gcs"
 
   config = {
-    bucket = "terraform-state-us-central1-mtif-439912"
-    prefix = "terraform/state"
+    bucket = "terraform_remote_state_us-central1_mtif-439912"
+    prefix = "terraform/remote-state"
+  }
+}
+
+data "terraform_remote_state" "vpc" {
+  backend = "gcs"
+
+  config = {
+    bucket = "terraform_remote_state_us-central1_mtif-439912"
+    prefix = "terraform/vpc"
   }
 }
 
@@ -13,9 +30,9 @@ data "terraform_remote_state" "vcp" {
 module "docker-teststand" {
   source = "git@github.com:LeyllProst/gcp-mtif-instances.git?ref=v2.1.2"
 
-  project_id = data.terraform_remote_state.vcp.outputs.project
-  network    = data.terraform_remote_state.vcp.outputs.vpc_network_self_link
-  subnetwork = data.terraform_remote_state.vcp.outputs.vpc_subnetwork_self_link[0]
+  project_id = data.terraform_remote_state.trs.outputs.project_id
+  network    = data.terraform_remote_state.vpc.outputs.vpc_network_self_link
+  subnetwork = data.terraform_remote_state.vpc.outputs.vpc_subnetwork_self_link[0]
 
   instance_name                = var.docker_teststand_instance_name
   zone                         = var.docker_teststand_instance_zone
@@ -36,10 +53,10 @@ module "docker-teststand" {
 module "docker-teststand_firewall" {
   source = "git@github.com:LeyllProst/gcp-mtif-firewall.git?ref=v2.1.0"
 
-  project = data.terraform_remote_state.vcp.outputs.project
+  project = data.terraform_remote_state.trs.outputs.project_id
 
   firewall_name = "docker-teststand-firewall-rules"
-  network       = data.terraform_remote_state.vcp.outputs.vpc_network_self_link
+  network       = data.terraform_remote_state.vpc.outputs.vpc_network_self_link
   source_ranges = ["0.0.0.0/0"]
   target_tags   = [var.docker_teststand_instance_name]
 

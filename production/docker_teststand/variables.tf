@@ -59,6 +59,5 @@ variable "docker_teststand_startup_script" {
     set -e
 
     apt update && apt upgrade -y
-    apt install docker-compose-v2 vim htop mc -y
   EOF
 }
