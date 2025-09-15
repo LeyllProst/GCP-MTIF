@@ -37,3 +37,4 @@ override.tf.json
 terraform.rc
 *.hcl
 prod/saltstack-infrastructure/.terraform.lock.hcl
+DS_Store
