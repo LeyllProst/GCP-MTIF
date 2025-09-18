@@ -2,7 +2,7 @@
 terraform {
   backend "gcs" {
     bucket = "terraform_remote_state_us-central1_mtif-439912"
-    prefix = "terraform/saltstack-infrastructure"
+    prefix = "terraform/pkg-repository"
   }
 }
 
