@@ -25,43 +25,22 @@ data "terraform_remote_state" "vpc" {
   }
 }
 
-
-
-# SALTMASTER instance
-module "saltmaster" {
+# PKG REPOSITORY instance
+module "pkg_repository" {
   source = "git@github.com:LeyllProst/gcp-mtif-instances.git?ref=v2.0.2"
 
   project_id          = data.terraform_remote_state.trs.outputs.project_id
   network             = data.terraform_remote_state.vpc.outputs.vpc_network_self_link
   subnetwork          = data.terraform_remote_state.vpc.outputs.vpc_subnetwork_self_link[1]
-  instance_name       = var.saltmaster-instance_name
-  zone                = var.saltmaster-instance_zone
-  network_ip          = var.saltmaster-network_ip
-  instance_type       = var.saltmaster-instance_type
+  instance_name       = var.pkg_repository_instance_name
+  zone                = var.pkg_repository_instance_zone
+  instance_type       = var.pkg_repository_instance_type
   update_stopping     = var.update_stopping
   deletion_protection = var.deletion_protection
-  labels              = var.saltmaster-labels
+  labels              = var.pkg_repository_labels
 
-  bootdisk_image_size = var.saltmaster-bootdisk_image_size
-  image               = var.saltmaster-image
+  bootdisk_image_size = var.pkg_repository_bootdisk_image_size
+  image               = var.pkg_repository_image
 
-  startup_script = var.saltmaster-startup_script
-}
-
-# FIREWALL rules
-module "saltstack_firewall" {
-  source = "git@github.com:LeyllProst/gcp-mtif-firewall.git?ref=v2.1.0"
-
-  project       = data.terraform_remote_state.trs.outputs.project_id
-  firewall_name = "saltstack-firewall-rules"
-  network       = data.terraform_remote_state.vpc.outputs.vpc_network_self_link
-
-  source_ranges = ["0.0.0.0/0"]
-
-  allow_rules = [
-    {
-      protocol = "tcp"
-      ports    = ["4505", "4506"]
-    }
-  ]
+  startup_script = var.pkg_repository_startup_script
 }
